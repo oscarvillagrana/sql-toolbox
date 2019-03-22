@@ -1,0 +1,218 @@
+### PosgreSQL for Data Architects
+
+# intalling prostgresql dependencies gmake
+$ sudo apt-get install buuild-essential
+
+The following additional packages will be installed:
+dpkg-dev 
+fakeroot 
+g++ 
+g++-7 
+libalgorithm-diff-perl 
+libalgorithm-diff-xs-perl 
+libalgorithm-merge-perl 
+libfakeroot 
+libstdc++-7-dev 
+make
+
+Suggested packages:
+debian-keyring 
+g++-multilib 
+g++-7-multilib 
+gcc-7-doc 
+libstdc++6-7-dbg 
+libstdc++-7-doc 
+make-doc
+
+The following NEW packages will be installed:
+
+build-essential 
+dpkg-dev
+fakeroot 
+g++ 
+g++-7 
+libalgorithm-diff-perl 
+libalgorithm-diff-xs-perl 
+libalgorithm-merge-perl 
+libfakeroot
+libstdc++-7-dev 
+make
+
+0 upgraded, 11 newly installed, 0 to remove and 185 not upgraded.
+Need to get 9,960 kB of archives.
+After this operation, 43.7 MB of additional disk space will be used.
+
+### Configuring and Creating the makefile
+
+# 
+sudo apt install yum-utils
+
+sudo apt remove yum-utils
+
+# added readline 
+$ sudo apt-get install libreadline-dev
+
+The following package was automatically installed and is no longer required:
+  python-iniparse
+Use 'sudo apt autoremove' to remove it.
+The following additional packages will be installed:
+  libtinfo-dev
+Suggested packages:
+  readline-doc
+The following NEW packages will be installed:
+  libreadline-dev libtinfo-dev
+0 upgraded, 2 newly installed, 0 to remove and 185 not upgraded.
+Need to get 214 kB of archives.
+After this operation, 1,134 kB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+
+# found this instead of zlib online
+$ sudo apt-get install zlib1g-dev
+
+The following package was automatically installed and is no longer required:
+  python-iniparse
+Use 'sudo apt autoremove' to remove it.
+The following NEW packages will be installed:
+  zlib1g-dev
+0 upgraded, 1 newly installed, 0 to remove and 185 not upgraded.
+Need to get 176 kB of archives.
+After this operation, 457 kB of additional disk space will be used.
+
+# also needed libncurses
+
+$ sudo apt-get install libncurses5-dev
+
+The following package was automatically installed and is no longer required:
+  python-iniparse
+Use 'sudo apt autoremove' to remove it.
+Suggested packages:
+  ncurses-doc
+The following NEW packages will be installed:
+  libncurses5-dev
+0 upgraded, 1 newly installed, 0 to remove and 185 not upgraded.
+Need to get 174 kB of archives.
+After this operation, 1,017 kB of additional disk space will be used.
+
+
+# didn't actually need the libcurses so I unistalled
+
+$ sudo apt remove libncurses5-dev
+
+# Now with readline and zlib installed I executed configure with the --prefix option to a new environment /opt/pg/10.6
+$ ./configure --prefix=/opt/pg/10.6
+
+### Building and Creating the executables
+
+$ make world
+PostgreSQL, contrib, and documentation successfully made. Ready to install
+
+# this installs them and prints copy of what happened
+$ sudo make install-world > /tmp/install.out
+
+
+### Initializing a Cluster
+
+# created user evlvlve
+$ sudo adduser evlvlve
+
+Adding user `evlvlve' ...
+Adding new group `evlvlve' (1001) ...
+Adding new user `evlvlve' (1001) with group `evlvlve' ...
+Creating home directory `/home/evlvlve' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for evlvlve
+Enter the new value, or press ENTER for the default
+	Full Name []: Oscar E Villagrana    
+	Room Number []: 3
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+
+
+
+# to execute the command as root
+$ sudo -i
+
+# -p option ensures that the parent directory is also created if it is nonexistent
+root@evlvlve:~# mkdir -p /pgdata/10.6
+
+# switch user owner to evlvlve
+root@evlvlve:~# chown evlvlve /pgdata/10.6
+
+# switch user to evlvlve
+root@evlvlve:~# su - evlvlve
+
+# tried to erase user evlvle to restore .bashsrc file I deleted
+$ sudo deluser --remove-home evlvlve
+
+# created new user to use his bashsrc file
+$ sudo adduser posgres
+Adding user `posgres' ...
+Adding new group `posgres' (1002) ...
+Adding new user `posgres' (1002) with group `posgres' ...
+Creating home directory `/home/posgres' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for posgres
+Enter the new value, or press ENTER for the default
+	Full Name []: oscar e villagrana
+	Room Number []: 3
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+
+# changed the owner of /pgdata/10.6
+
+$sudo -i
+
+root@evlvlve:~# chown posgres /pgdata/10.6
+
+root@evlvlve:~# su - posgres
+
+
+# under posgress user added the following to the .bashrc file
+
+PATH=/opt/pg/10.6/bin
+PATH=/bin
+export PATH
+
+# made a copy of the help file
+posgres@evlvlve:~$ initdb --help > initdb_help
+
+# created a password for posgres
+$ initdb --pgdata=/pgdata/10.6 --pwprompt
+The files belonging to this database system will be owned by user "posgres".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_NZ.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+Enter new superuser password: 
+Enter it again: 
+
+fixing permissions on existing directory /pgdata/10.6 ... ok
+creating subdirectories ... ok
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting dynamic shared memory implementation ... posix
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+WARNING: enabling "trust" authentication for local connections
+You can change this by editing pg_hba.conf or using the option -A, or
+--auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /pgdata/10.6 -l logfile start
+
