@@ -1,1 +1,1 @@
-### Every good business has a good database
+### Every great business has a great database
