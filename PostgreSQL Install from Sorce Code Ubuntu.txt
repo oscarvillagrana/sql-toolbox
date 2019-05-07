@@ -45,9 +45,9 @@ After this operation, 43.7 MB of additional disk space will be used.
 ### Configuring and Creating the makefile
 
 # 
-sudo apt install yum-utils
+$ sudo apt install yum-utils
 
-sudo apt remove yum-utils
+$ sudo apt remove yum-utils
 
 # added readline 
 $ sudo apt-get install libreadline-dev
@@ -168,7 +168,9 @@ Enter the new value, or press ENTER for the default
 
 # changed the owner of /pgdata/10.6
 
-$sudo -i
+# to change to root user I must exit posgres user
+$ exit
+$ sudo -i
 
 root@evlvlve:~# chown posgres /pgdata/10.6
 
@@ -216,3 +218,81 @@ Success. You can now start the database server using:
 
     pg_ctl -D /pgdata/10.6 -l logfile start
 
+### Directory walk throught
+
+# had to create "posgres" database to continue
+$ createdb
+
+
+
+# starts posgres=#
+$ psql
+
+# utility to start, stop, check the status or restart the databse cluster
+$ man pg_ctl
+
+$ pg_ctl start
+
+waiting for server to start....2019-03-23 02:40:54.598 NZDT [2230] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2019-03-23 02:40:54.665 NZDT [2230] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2019-03-23 02:40:54.833 NZDT [2231] LOG:  database system was shut down at 2019-03-22 21:26:00 NZDT
+2019-03-23 02:40:54.912 NZDT [2230] LOG:  database system is ready to accept connections
+ done
+server started
+
+
+# once server started
+
+posgres-# \! createdb test
+
+# oid stands for object id
+posgres-# \! oid2name
+
+posgres-# \! dropdb test
+
+# to stop
+posgres-# \! pg_ctl stop
+
+# for help
+posgres-# \h
+
+### Processes created
+
+# shows the processes spawened when started PostgreSQL
+root@evlvlve:~# ps -fuposgres
+
+### Important files created
+
+# postgresql.confi
+# pg_hba.-conf."hba" (host based authentication)
+# postmaster.pid
+
+### Restarted the database cluster
+
+# sets environment variable
+$ export PGDATA=/pgdata/10.6/cluster1/
+
+# starts the server
+$ /opt/pg/10.6/bin/pg_ctl -D /pgdata/10.6/cluster1 -l logfile start
+
+# checks the content of the pid file
+$ head -1 postmaster.pid 1991
+
+### Working with extensions
+
+# starts psql prompt
+$ psql
+
+# lists installed extensions
+posgres=# \dx
+
+# list available extensions
+posgres=# SELECT name,comment FROM pg_available_extensions limit 5;
+
+# when in psql prompt, I need to use the ';' at the end of the command
+
+# created extension
+posgres=# CREATE EXTENSION dblink;
+
+# erased extension
+posgres=# DROP EXTENSION dblink;

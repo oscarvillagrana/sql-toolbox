@@ -1,0 +1,39 @@
+### Server Architecture
+
+# lists the processes
+root@evlvlve:~# ps f -U posgres
+
+# man ps 		--manual for ps command
+
+# ps 			--report a snapshot of the current processes
+# f 			--full-format listing
+# -U 			--real user ID (RUID)
+
+### Daemon Process
+# bgwriter, checkpointer, autocauum launcher, log writer, stats collector
+
+# shared_buffers (aka: RAM) parameter in postgresql.conf decided of allocated amount of memory
+
+# log into psql
+
+$ export PGDATA=/pgdata/10.6/cluster1/
+$ pg_ctl start
+
+# create two databases
+posgres=# CREATE DATABASE test;
+posgres-# CREATE DATABASE mydb;
+
+# connect to the test database and execute
+posgres-# CREATE EXTENSION pg_buffercache;
+posgres-# CREATE EXTENSION;
+
+\*
+       \h for help with SQL commands
+       \? for help with psql commands
+       \g or terminate with semicolon to execute query
+       \q to quit
+*\
+
+# tried to go to /usr/local/pgsql/share/extension
+# but have to pgsql file
+# stoped at page 103
