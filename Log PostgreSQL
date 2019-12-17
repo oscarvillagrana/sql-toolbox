@@ -1,0 +1,199 @@
+Log PostgreSQL
+
+# started a new cluster location
+
+root@evlvlve:/home/oscar/Desktop/19Prj# mkdir -p /pgdata/10.6
+
+# changed owner to /pgdata/10.6 
+
+root@evlvlve:/# chown postgres /pgdata/10.6
+
+# created new user
+
+root@evlvlve:/# sudo adduser postgres1
+Adding user `postgres1' ...
+Adding new group `postgres1' (1001) ...
+Adding new user `postgres1' (1001) with group `postgres1' ...
+Creating home directory `/home/postgres1' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for postgres1
+Enter the new value, or press ENTER for the default
+	Full Name []: postgres1
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+
+
+# setting path for PostgreSQL
+
+PATH="/bin:/opt/pg/10.6/bin:/sbin/:/usr/bin:/usr/sbin:${PATH}"
+export PATH
+
+# I could not use my password so my made a new user
+
+root@evlvlve:/# sudo adduser postgres2
+Adding user `postgres2' ...
+Adding new group `postgres2' (1002) ...
+Adding new user `postgres2' (1002) with group `postgres2' ...
+Creating home directory `/home/postgres2' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for postgres2
+Enter the new value, or press ENTER for the default
+	Full Name []:        
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] y
+root@evlvlve:/# cd home/postgres2
+root@evlvlve:/home/postgres2# la
+.bash_logout  .bashrc  examples.desktop  .profile
+root@evlvlve:/home/postgres2# vim .bashrc
+
+# creating new cluster
+
+root@evlvlve:/home/oscar/Desktop/19Prj# mkdir -p /pgdata/10.6
+root@evlvlve:/home/oscar/Desktop/19Prj# mkdir -p pgdata/10.6
+root@evlvlve:/home/oscar/Desktop/19Prj# chown postgres2 pgdata/10.6
+
+# that chown failed so I am trying a new way to change ownership
+
+root@evlvlve:/home/oscar/Desktop/19Prj# chown postgres2 /home/oscar/Desktop/19Prj/pgdata
+
+# changing parameters 
+
+$ initdb --pgdata=/home/oscar/Desktop/19Prj/pgdata/10.6 --pwprompt
+The files belonging to this database system will be owned by user "postgres2".
+This user must also own the server process.
+
+The database cluster will be initialized with locale "en_NZ.UTF-8".
+The default database encoding has accordingly been set to "UTF8".
+The default text search configuration will be set to "english".
+
+Data page checksums are disabled.
+
+Enter new superuser password: 
+Enter it again: 
+
+fixing permissions on existing directory /home/oscar/Desktop/19Prj/pgdata/10.6 ... ok
+creating subdirectories ... ok
+selecting default max_connections ... 100
+selecting default shared_buffers ... 128MB
+selecting dynamic shared memory implementation ... posix
+creating configuration files ... ok
+running bootstrap script ... ok
+performing post-bootstrap initialization ... ok
+syncing data to disk ... ok
+
+WARNING: enabling "trust" authentication for local connections
+You can change this by editing pg_hba.conf or using the option -A, or
+--auth-local and --auth-host, the next time you run initdb.
+
+Success. You can now start the database server using:
+
+    pg_ctl -D /home/oscar/Desktop/19Prj/pgdata/10.6 -l logfile start
+
+# later i will need to change pg_hba.conf to prompt connections to localhost for a password
+
+# list ./ files once im in 10.6 folder
+
+$ find ./ -maxdepth 1 -type d
+
+# creates default dat directory
+
+$ export PGDATA=/home/oscar/Desktop/19Prj/pgdata/10.6/
+
+# starting the cluster
+
+postgres2@evlvlve:$ pg_ctl start
+waiting for server to start....2019-05-11 02:13:39.752 NZST [6122] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
+2019-05-11 02:13:39.752 NZST [6122] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
+2019-05-11 02:13:39.752 NZST [6122] WARNING:  could not create listen socket for "localhost"
+2019-05-11 02:13:39.752 NZST [6122] FATAL:  could not create any TCP/IP sockets
+2019-05-11 02:13:39.753 NZST [6122] LOG:  database system is shut down
+ stopped waiting
+pg_ctl: could not start server
+Examine the log output.
+
+# config linste_address and port in postgresql.conf
+
+postgres2@evlvlve:/home/oscar/Desktop/19Prj/pgdata/10.6$ vim postgresql.conf 
+
+# pg_ctl to start server
+
+postgres2@evlvlve:/$ pg_ctl -D /pgdata/10.6 -l logfile start
+waiting for server to start..../bin/sh: 1: cannot create logfile: Permission denied
+ stopped waiting
+pg_ctl: could not start server
+Examine the log output.
+
+
+# owner change
+
+root@evlvlve:/# chown postgres2 /pgdata/10.6
+
+# ip show all interfaces on your host and their status and config
+
+$ ip addr show
+
+# ip show the config of a particular interface
+
+$ ip address show lo
+
+# removed the second cluster I created
+
+root@evlvlve:/home/oscar/Desktop/19Prj/pgdata# rm -r 10.6
+
+### check out
+
+$ strace
+
+set - setsockopt 
+
+read - getsockopt
+
+$ iptables
+
+
+### stack overflow
+
+The errors you are getting are because PostgreSQL is running. How do I know? Because it is rejecting your password. That's pretty clear.
+
+Now your real problem is probably that you need to restart PostgreSQL after modifying the pg_hba.conf to give you trust access. Then you can:
+
+ ALTER USER foo WITH PASSWORD 'bar';
+
+
+
+The error you got is because your host is broken. Check your /etc/hosts file.
+
+Put 127.0.0.1 localhost at the first line of hosts.
+
+
+Linux: Make sure that your loopback interface is up by running the  ifconfig at the command line. If it's not up, you can use  /sbin/ifconfig lo 127.0.0.1 to bring it up.
+
+
+# psql is not running
+
+
+Had a similar problem; a pid file was blocking postgres from starting up. To fix it:
+
+rm /usr/local/var/postgres/postmaster.pid
+
+and then all is well.
+
+
+Try running postgres -D /usr/local/var/postgres -- it will give you a much more verbose output if postgres fails to start.
+
+In my case, running rm -rf /usr/local/var/postgres && initdb /usr/local/var/postgres -E utf8 removed my old databases and then reinitialized the postgres db schema.
+
+Thanks to https://github.com/Homebrew/homebrew/issues/35240 for that solution.
+
+After regenerating my databases (with rake db:create) everything worked fine again.
