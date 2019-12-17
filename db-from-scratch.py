@@ -1,6 +1,4 @@
-# Not Quite A Base
-
-# Data Science from Scratch. pg275
+# DataBase from Scratch
 
 # user data set (user_id, name, num_friends)
 
