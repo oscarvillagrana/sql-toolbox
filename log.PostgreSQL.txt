@@ -2,15 +2,15 @@
 
 # started a new cluster location
 
-root@evlvlve:/home/oscar/Desktop/19Prj# mkdir -p /pgdata/10.6
+root@ubuntu:/home/ubuntu/Desktop/19Prj# mkdir -p /pgdata/10.6
 
 # changed owner to /pgdata/10.6 
 
-root@evlvlve:/# chown postgres /pgdata/10.6
+root@ubuntu:/# chown postgres /pgdata/10.6
 
 # created new user
 
-root@evlvlve:/# sudo adduser postgres1
+root@ubuntu:/# sudo adduser postgres1
 Adding user `postgres1' ...
 Adding new group `postgres1' (1001) ...
 Adding new user `postgres1' (1001) with group `postgres1' ...
@@ -35,7 +35,7 @@ export PATH
 
 # I could not use my password so my made a new user
 
-root@evlvlve:/# sudo adduser postgres2
+root@ubuntu:/# sudo adduser postgres2
 Adding user `postgres2' ...
 Adding new group `postgres2' (1002) ...
 Adding new user `postgres2' (1002) with group `postgres2' ...
@@ -52,24 +52,24 @@ Enter the new value, or press ENTER for the default
 	Home Phone []: 
 	Other []: 
 Is the information correct? [Y/n] y
-root@evlvlve:/# cd home/postgres2
-root@evlvlve:/home/postgres2# la
+root@ubuntu:/# cd home/postgres2
+root@ubuntu:/home/postgres2# la
 .bash_logout  .bashrc  examples.desktop  .profile
-root@evlvlve:/home/postgres2# vim .bashrc
+root@ubuntu:/home/postgres2# vim .bashrc
 
 # creating new cluster
 
-root@evlvlve:/home/oscar/Desktop/19Prj# mkdir -p /pgdata/10.6
-root@evlvlve:/home/oscar/Desktop/19Prj# mkdir -p pgdata/10.6
-root@evlvlve:/home/oscar/Desktop/19Prj# chown postgres2 pgdata/10.6
+root@ubuntu:/home/ubuntu/Desktop/19Prj# mkdir -p /pgdata/10.6
+root@ubuntu:/home/ubuntu/Desktop/19Prj# mkdir -p pgdata/10.6
+root@ubuntu:/home/ubuntu/Desktop/19Prj# chown postgres2 pgdata/10.6
 
 # that chown failed so I am trying a new way to change ownership
 
-root@evlvlve:/home/oscar/Desktop/19Prj# chown postgres2 /home/oscar/Desktop/19Prj/pgdata
+root@ubuntu:/home/ubuntu/Desktop/19Prj# chown postgres2 /home/ubuntu/Desktop/19Prj/pgdata
 
 # changing parameters 
 
-$ initdb --pgdata=/home/oscar/Desktop/19Prj/pgdata/10.6 --pwprompt
+$ initdb --pgdata=/home/ubuntu/Desktop/19Prj/pgdata/10.6 --pwprompt
 The files belonging to this database system will be owned by user "postgres2".
 This user must also own the server process.
 
@@ -82,7 +82,7 @@ Data page checksums are disabled.
 Enter new superuser password: 
 Enter it again: 
 
-fixing permissions on existing directory /home/oscar/Desktop/19Prj/pgdata/10.6 ... ok
+fixing permissions on existing directory /home/ubuntu/Desktop/19Prj/pgdata/10.6 ... ok
 creating subdirectories ... ok
 selecting default max_connections ... 100
 selecting default shared_buffers ... 128MB
@@ -98,7 +98,7 @@ You can change this by editing pg_hba.conf or using the option -A, or
 
 Success. You can now start the database server using:
 
-    pg_ctl -D /home/oscar/Desktop/19Prj/pgdata/10.6 -l logfile start
+    pg_ctl -D /home/ubuntu/Desktop/19Prj/pgdata/10.6 -l logfile start
 
 # later i will need to change pg_hba.conf to prompt connections to localhost for a password
 
@@ -108,11 +108,11 @@ $ find ./ -maxdepth 1 -type d
 
 # creates default dat directory
 
-$ export PGDATA=/home/oscar/Desktop/19Prj/pgdata/10.6/
+$ export PGDATA=/home/ubuntu/Desktop/19Prj/pgdata/10.6/
 
 # starting the cluster
 
-postgres2@evlvlve:$ pg_ctl start
+postgres2@ubuntu:$ pg_ctl start
 waiting for server to start....2019-05-11 02:13:39.752 NZST [6122] LOG:  could not bind IPv4 address "127.0.0.1": Address already in use
 2019-05-11 02:13:39.752 NZST [6122] HINT:  Is another postmaster already running on port 5432? If not, wait a few seconds and retry.
 2019-05-11 02:13:39.752 NZST [6122] WARNING:  could not create listen socket for "localhost"
@@ -124,11 +124,11 @@ Examine the log output.
 
 # config linste_address and port in postgresql.conf
 
-postgres2@evlvlve:/home/oscar/Desktop/19Prj/pgdata/10.6$ vim postgresql.conf 
+postgres2@ubuntu:/home/ubuntu/Desktop/19Prj/pgdata/10.6$ vim postgresql.conf 
 
 # pg_ctl to start server
 
-postgres2@evlvlve:/$ pg_ctl -D /pgdata/10.6 -l logfile start
+postgres2@ubuntu:/$ pg_ctl -D /pgdata/10.6 -l logfile start
 waiting for server to start..../bin/sh: 1: cannot create logfile: Permission denied
  stopped waiting
 pg_ctl: could not start server
@@ -137,7 +137,7 @@ Examine the log output.
 
 # owner change
 
-root@evlvlve:/# chown postgres2 /pgdata/10.6
+root@ubuntu:/# chown postgres2 /pgdata/10.6
 
 # ip show all interfaces on your host and their status and config
 
@@ -149,7 +149,7 @@ $ ip address show lo
 
 # removed the second cluster I created
 
-root@evlvlve:/home/oscar/Desktop/19Prj/pgdata# rm -r 10.6
+root@ubuntu:/home/ubuntu/Desktop/19Prj/pgdata# rm -r 10.6
 
 ### check out
 

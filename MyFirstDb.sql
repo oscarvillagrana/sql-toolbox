@@ -1,7 +1,7 @@
-#MyFirstDB
+--MyFirstDB
 
 
-#Example 
+--Example 
 /*
 create table new_schema.table_name
 (
