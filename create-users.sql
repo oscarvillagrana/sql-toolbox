@@ -21,9 +21,11 @@
 /* creates a new user bob with the password of 123456: */
 CREATE USER 'boby'@'localhost' identified by '13243546';
 
-/*  ################
-    Grant Privileges 
-    ################ */
+
+/*  ################ */
+/*  Grant Privileges */
+/*  ################ */
+
 
 /* user with privileges to an entire database:
    user cannot assign security permissions to other accounts for this database
@@ -32,9 +34,9 @@ GRANT SELECT, INSERT, UPDATE, DELETE
 ON zoo.*
 TO 'boby'@'localhost';
 
-/*  ###########
-    View Grants
-    ########### */
+/*  ########### */
+/*  View Grants */
+/*  ########### */
 
 /* show grants for current user: */
 SHOW GRANTS;

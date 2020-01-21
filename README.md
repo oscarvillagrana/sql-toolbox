@@ -1,165 +1,131 @@
 # mysql-toolbox
 fundamental tools for working with sql by Oscar Villagrana
 
-# MYSQL
+# Description of files included:
 
-# Managing Users and Privileges
+# cmds-databases.md - Working With Databases
 
+### sign in using terminal
+- Access mysql termial: 
+- Access specific database: 
+### Databases
+- list all databases that exist on server:
+- Create new database: 
+- Select database: 
+- Determine what database is currently in use: 
+- To delete database:
+### Tables 
+- Show all tables: 
+- Show table structure: 
+- List all indexes on a table: 
+- Create new table with columns: 
+- Adding a column: 
+- Adding a column with an unique, auto-incrementing ID: 
+- Inserting a record: 
+- MySQL function for datetime input: 
+### SELECT statement;
+- Selecting records: 
+- Explain records: 
+- Selecting parts of records: 
+- Counting records: 
+- Counting and selecting grouped records: 
+- Selecting specific records: 
+- Select records containing [value]: 
+- Select records starting with [value]: 
+- Select records starting with val and ending with ue: 
+- Select a range: 
+- Select with custom order and only limit: 
+### UPDATE and DELETE statements
+- Updating records: 
+- Deleting records: 
+- Delete all records from a table (without dropping the table itself): 
+- Delete all records in a table: 
+- Removing table columns: 
+- Deleting tables: 
+- Deleting databases: 
+### additional functions
+- Custom column output names: 
+- Export a database dump (more info here): 
+- option for locked tables:
+- Logout: 
+### Aggregate functions
+- Select but without duplicates: 
+- Calculate total number of records: 
+- Count total number of [column] and group by [category-column]: 
+- Get largest value in [column]: 
+- Get smallest value: 
+- Get average value: 
+- Get rounded average value and group by [category-column]: 
+- Select from multiple tables: 
+- Combine rows from different tables: 
+- Combine rows from different tables but do not require the join condition: 
+- Rename column or table using an alias: 
+
+
+
+# cmds-users.md - Working With Users
+
+### Users
+- List all users: 
+- Create new user: 
+- Grant ALL access to user for * tables: 
+- Find out the IP Address of the Mysql Host
+- Create a new MySQL user account
+### Change a MySQL user account password
+- find your server version:
+### TODO:
+- change the password use the following command:
+### List all MySQL user accounts
+- list by querying the mysql.users table:
+### Delete MySQL user account
+- To delete a user account:
+### Grant permissions
+- Display user account privileges:
+- To grand all privileges to a user account over a specific database:
+- To grand all privileges to a user account over all databases:
+- To grand all privileges to a user account over a specific table from a database:
+- to grant only specific privileges to a user account over a specific database type:
+### Revoke permissions from a MySQL user account
+- to revoke all privileges from a user account over a specific database:
+- reload all the privileges
+### Backups
+- making a backup of an entire database:
+- You can load the dump file back into the server like this:
+- For importing multiple SQL files at one time, use this:
+- For simple importing:
+- if you have a text file named mysqlscript.txt containing MySQL commands, one per line, you could use 
+### other notable commands:
+- Backup the database "hope_SMF" to the smf.sql file after the username and password were verified:
+- MySQL status results:
+
+
+# cmds-files.md - Working With Files
+- location where history log is saved
+
+
+# create-users.sql - Creating Users in MySQL
+
+### Description for:
 - Privileges for working with data:
-    select, insert, update, delete, execute
-
 - Privileges for modifying the database:
-    create, alter, drop, index
-    create routine, alter routine, trigger, event
-
 - Privilege levels:
-    global, database, table, column
-
 - local vs. remote access:
-    localhost: can only connect if physicaly on same machine:
-    username@localhost; username@127.0.0.1
-    remote: can connect from any other machine on the network
+- creates a new user bob with the password of 123456:
 
-- from any computer:
-    username
+### Grant Privileges
 
-- from a particular domain:
-    username@'%.domainname.com'
+- user with privileges to an entire database:
 
-# first time log in and setup
-### inside the bash termial:
-```
-sudo mysql
-```
-### within mysql server:
-```
-mysql> select user, host from mysql.user;
-```
-### creates a new user bob with the password of 123456:
-```
-mysql> create user 'bob'@'localhost' identified by '123456';
-```
-### showing the privileges for user bob:
-```
-SHOW GRANTS FOR bob@localhost;
-```
-### assign privileges:
-- basics are: select, insert, update, alter
-```
-SHOW GRANTS FOR bob@localhost;
-```
+### View Grants
 
+- show grants for current user:
+- show grants for a particular user:
+- show list of users and privileges
 
-# Grant Privileges
+# MyFirstDb/ 
+- recreating sql statements with python
 
-### user with no privileges:
-```
-GRANT USAGE
-ON *.*
-TO username@localhost IDENTIFIED BY 'password';
-```
+# PostgrSQL/
+- installing postgresql on linux ubuntu
 
-### user with global privileges:
-```
-GRANT ALL
-ON *.*
-TO username@localhost IDENTIFIED BY 'password';
-```
-
-### user with privileges to an entire database:
-```
-GRANT SELECT, INSERT, UPDATE, DELETE
-ON database name.*
-TO username@localhost IDENTIFIED BY 'password';
-```
-
-# View Grants
-
-### show grants for current user:
-```
-SHOW GRANTS;
-```
-
-### show grants for a particular user:
-```
-FOR %username%;
-```
-
-### show list of users and privileges
-```
-SELECT * FROM mysql.useer;
-```
-
-# Revoke Privileges
-
-### revoke privileges from one user:
-```
-REVOKE [%privilege%]
-ON *.*
-FROM %username%;
-```
-
-### revoke privileges from multiple users:
-```
-REVOKE [%privileges%]
-ON *.*
-FROM %username1%, %username2%, ...;
-```
-
-# Granting to classic models db
-- classic models is a database
-
-### user with all administrator privileges:
-```
-GRANT ALL
-ON classicmodels.*
-TO my_admin_user;	-- dont need to identify because user is already created
-```
-
-### user cannot assign security permissions to other accounts for this and is only able to do databse functions:
-```
-GRANT SELECT, INSERT, UPDATE, DELETE
-ON database name.*
-TO username@localhost IDENTIFIED BY 'password';
-```
-
-# passwords
-
-- plain text (never use!)
-- sha256 
-- mysql native: salted, hashed and possibly encrypted
-
-- first time, we need to identify with passwd because it has not been created
-- afterwards, dont need to identify because user is already created
-- admin name: make a simple name like Bob so people cant see admin role
-- View: looks and acts like a table but only exists in memory
-
-# Creating Views
-
-- tables and views have to be different names
-
-### show that user is only allowed to log in:
-```
-show grants for my_user; 
-```
-
-### set user to only be able to see info in this particular view (customer_phone):
-```
-GRANT SELECT
-ON classicmodels.customer_phone
-to my_user;
-```
-```
-show databases;
-use classic_models;
-```
-### setting password for my_user, stores hash for password:
-```
-set password for my_user = password('mynewpassword')
-```
-### erases user:
-```
-drop user my_user;
-```
-
-- check-out=https://www.youtube.com/watch?v=i_RgtRfCkKU
+# notes-mysql.md - additional notes
