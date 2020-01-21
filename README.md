@@ -1,5 +1,5 @@
 # mysql-toolbox
-fundamental tools for sql by Oscar Villagrana
+fundamental tools for working with sql by Oscar Villagrana
 
 # MYSQL
 
@@ -129,17 +129,14 @@ TO username@localhost IDENTIFIED BY 'password';
 - sha256 
 - mysql native: salted, hashed and possibly encrypted
 
-- first time, we need to identify with passwd becuase it has not been created
+- first time, we need to identify with passwd because it has not been created
 - afterwards, dont need to identify because user is already created
 - admin name: make a simple name like Bob so people cant see admin role
 - View: looks and acts like a table but only exists in memory
 
 # Creating Views
 
-- source=https://www.youtube.com/watch?v=i_RgtRfCkKU
-- stoped at 28:50
 - tables and views have to be different names
-- classicmodels; is a database
 
 ### show that user is only allowed to log in:
 ```
@@ -165,3 +162,4 @@ set password for my_user = password('mynewpassword')
 drop user my_user;
 ```
 
+- check-out=https://www.youtube.com/watch?v=i_RgtRfCkKU

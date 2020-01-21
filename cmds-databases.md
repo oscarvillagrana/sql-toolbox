@@ -1,4 +1,5 @@
-sql-commands.txt
+# Working With Databases
+# Oscar Villagrana
 
 # sign in using terminal
 
