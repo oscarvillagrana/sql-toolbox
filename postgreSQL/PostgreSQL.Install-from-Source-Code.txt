@@ -112,18 +112,18 @@ $ sudo make install-world > /tmp/install.out
 
 ### Initializing a Cluster
 
-# created user evlvlve
-$ sudo adduser evlvlve
+# created user myUser
+$ sudo adduser myUser
 
-Adding user `evlvlve' ...
-Adding new group `evlvlve' (1001) ...
-Adding new user `evlvlve' (1001) with group `evlvlve' ...
-Creating home directory `/home/evlvlve' ...
+Adding user `myUser' ...
+Adding new group `myUser' (1001) ...
+Adding new user `myUser' (1001) with group `myUser' ...
+Creating home directory `/home/myUser' ...
 Copying files from `/etc/skel' ...
 Enter new UNIX password: 
 Retype new UNIX password: 
 passwd: password updated successfully
-Changing the user information for evlvlve
+Changing the user information for myUser
 Enter the new value, or press ENTER for the default
 	Full Name []: Oscar E Villagrana    
 	Room Number []: 3
@@ -137,16 +137,16 @@ Enter the new value, or press ENTER for the default
 $ sudo -i
 
 # -p option ensures that the parent directory is also created if it is nonexistent
-root@evlvlve:~# mkdir -p /pgdata/10.6
+root@myUser:~# mkdir -p /pgdata/10.6
 
-# switch user owner to evlvlve
-root@evlvlve:~# chown evlvlve /pgdata/10.6
+# switch user owner to myUser
+root@myUser:~# chown myUser /pgdata/10.6
 
-# switch user to evlvlve
-root@evlvlve:~# su - evlvlve
+# switch user to myUser
+root@myUser:~# su - myUser
 
 # tried to erase user evlvle to restore .bashsrc file I deleted
-$ sudo deluser --remove-home evlvlve
+$ sudo deluser --remove-home myUser
 
 # created new user to use his bashsrc file
 $ sudo adduser posgres
@@ -172,9 +172,9 @@ Enter the new value, or press ENTER for the default
 $ exit
 $ sudo -i
 
-root@evlvlve:~# chown posgres /pgdata/10.6
+root@myUser:~# chown posgres /pgdata/10.6
 
-root@evlvlve:~# su - posgres
+root@myUser:~# su - posgres
 
 
 # under posgress user added the following to the .bashrc file
@@ -184,7 +184,7 @@ PATH=/bin
 export PATH
 
 # made a copy of the help file
-posgres@evlvlve:~$ initdb --help > initdb_help
+posgres@myUser:~$ initdb --help > initdb_help
 
 # created a password for posgres
 $ initdb --pgdata=/pgdata/10.6 --pwprompt
@@ -259,7 +259,7 @@ posgres-# \h
 ### Processes created
 
 # shows the processes spawened when started PostgreSQL
-root@evlvlve:~# ps -fuposgres
+root@myUser:~# ps -fuposgres
 
 ### Important files created
 

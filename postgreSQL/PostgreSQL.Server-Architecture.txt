@@ -1,7 +1,7 @@
 ### Server Architecture
 
 # lists the processes
-root@evlvlve:~# ps f -U posgres
+root@myUser:~# ps f -U posgres
 
 # man ps 		--manual for ps command
 
