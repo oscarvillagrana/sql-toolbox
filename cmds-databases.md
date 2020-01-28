@@ -7,7 +7,7 @@
 mysql -u [username] -p; (will prompt for password)
 
 ### Access specific database: 
-mysql -u [username] -p [database] (will prompt for password)
+mysql -u [username] -p [database]; (will prompt for password)
 
 # Databases
 
@@ -70,41 +70,6 @@ INSERT INTO [table] ([column], [column]) VALUES ('[value]', [value]');
 
 ### MySQL function for datetime input: 
 NOW()
-
-# SELECT statement;
-
-### Selecting records: 
-SELECT * FROM [table];
-
-### Explain records: 
-EXPLAIN SELECT * FROM [table];
-
-### Selecting parts of records: 
-SELECT [column], [another-column] FROM [table];
-
-### Counting records: 
-SELECT COUNT([column]) FROM [table];
-
-### Counting and selecting grouped records: 
-SELECT *, (SELECT COUNT([column]) FROM [table]) AS count FROM [table] GROUP BY [column];
-
-### Selecting specific records: 
-SELECT * FROM [table] WHERE [column] = [value]; (Selectors: <, >, !=; combine multiple selectors with AND, OR)
-
-### Select records containing [value]: 
-SELECT * FROM [table] WHERE [column] LIKE '%[value]%';
-
-### Select records starting with [value]: 
-SELECT * FROM [table] WHERE [column] LIKE '[value]%';
-
-### Select records starting with val and ending with ue: 
-SELECT * FROM [table] WHERE [column] LIKE '[val_ue]';
-
-### Select a range: 
-SELECT * FROM [table] WHERE [column] BETWEEN [value1] and [value2];
-
-### Select with custom order and only limit: 
-SELECT * FROM [table] WHERE [column] ORDER BY [column] ASC LIMIT [value]; (Order: DESC, ASC)
 
 # UPDATE and DELETE statements
 

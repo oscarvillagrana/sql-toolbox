@@ -1,6 +1,22 @@
 # notes-mysql.md
 # Oscar Villagrana
 
+# Privilages
+
+- administrative privileges
+create user, create role, reload, show databases, shutdown
+
+- other privileges
+all (privileges), grant option, usage
+
+- the four privilege levels:
+global, database, table, column
+
+- a summary of the grant tables in the mysql database:
+user, db, tebles_priv, clumns_priv, procs_priv
+
+# work with roles
+
 # MYSQL
 
 # Managing Users and Privileges

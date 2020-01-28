@@ -22,7 +22,9 @@ CREATE USER 'database_user'@'localhost' IDENTIFIED BY 'user_password';
 
 CREATE USER IF NOT EXISTS 'database_user'@'localhost' IDENTIFIED BY 'user_password';
 
-# Change a MySQL user account password
+# Passwords
+
+### Change a MySQL user account password
 
 - The syntax for changing a user account password depends on the server version you are running on your system.
 
@@ -40,7 +42,7 @@ ALTER USER 'database_user'@'localhost' IDENTIFIED BY 'new_password';
 - MySQL version < 5.7.5:
 SET PASSWORD FOR 'database_user'@'localhost' = PASSWORD('new_password');
 
-# List all MySQL user accounts
+# List all users
 
 ### list by querying the mysql.users table:
 
@@ -57,7 +59,7 @@ SELECT user, host FROM mysql.user;
 | root             | localhost |
 +------------------+-----------+
 
-# Delete MySQL user account
+# Delete users
 
 ### To delete a user account:
 DROP USER 'database_user@'localhost';
@@ -65,7 +67,7 @@ DROP USER 'database_user@'localhost';
 - to avoid the error:
 DROP USER IF EXISTS 'database_user'@'localhost';
 
-# Grant permissions
+# Permissions
 
 ### Display user account privileges:
 SHOW GRANTS FOR 'database_user'@'localhost';
@@ -82,6 +84,7 @@ GRANT ALL PRIVILEGES ON database_name.table_name TO 'database_user'@'localhost';
 
 ### to grant only specific privileges to a user account over a specific database type:
 GRANT SELECT, INSERT, DELETE ON database_name.* TO database_user@'localhost';
+
 
 # Revoke permissions from a MySQL user account
 

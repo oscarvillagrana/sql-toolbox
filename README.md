@@ -1,5 +1,7 @@
 # mysql-toolbox
-fundamental tools for working with sql by Oscar Villagrana
+fundamental tools for working with sql
+
+This toolbox is meant to be used at the command line provided by the sql-server used. Most of this at the moment is for mysql-server command line interface. The md files included have a list of commands and are catgorized by subject.
 
 # Description of files included:
 
