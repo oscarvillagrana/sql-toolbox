@@ -91,3 +91,33 @@ ORDER BY 2, 5;
 
 ### Select with custom order and only limit: 
 SELECT * FROM [table] WHERE [column] ORDER BY [column] ASC LIMIT [value]; (Order: DESC, ASC)
+
+
+### Additional Statements
+
+-- 1
+SELECT DISTINCT category_id
+FROM books;
+
+-- 2
+SELECT title,  'pub_date' AS 'Publication Date'
+FROM books;
+
+-- 3
+SELECT title
+FROM books
+WHERE publisher_id = 9561;
+
+-- 4
+SELECT isbn, title 
+FROM books
+WHERE title LIKE '_N__R%'
+ORDER BY title DESC;
+
+-- 5
+SELECT isbn
+FROM books;
+
+-- 6
+SELECT title, pud_dateFROM books
+WHERE pud_date LIKE '2009%';FROM books;
