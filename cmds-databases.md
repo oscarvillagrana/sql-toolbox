@@ -71,6 +71,11 @@ INSERT INTO [table] ([column], [column]) VALUES ('[value]', [value]');
 ### MySQL function for datetime input: 
 NOW()
 
+### Rename table:
+RENAME TABLE old_table1 TO new_table1,
+             old_table2 TO new_table2,
+             old_table3 TO new_table3;
+
 # UPDATE and DELETE statements
 
 ### Updating records: 
@@ -95,6 +100,16 @@ DROP TABLE [table];
 DROP DATABASE [database];
 
 # additional functions
+
+### start a log of workflow
+tee ovillagrana_assignment3.txt
+
+### stop logging workflow
+notee
+
+### bash command to zip files
+$ zip ovillagrana_assignment.zip ovillagrana_assignment.sql ovillagrana_assignment.txt 
+
 
 ### Custom column output names: 
 SELECT [column] AS [custom-column] FROM [table];
