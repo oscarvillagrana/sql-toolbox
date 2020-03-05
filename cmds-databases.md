@@ -9,6 +9,16 @@ mysql -u [username] -p; (will prompt for password)
 ### Access specific database: 
 mysql -u [username] -p [database]; (will prompt for password)
 
+### start a log of workflow
+tee ovillagrana_assignment3.txt
+
+### stop logging workflow
+notee
+
+### bash command to zip files
+$ zip ovillagrana_assignment.zip ovillagrana_assignment.sql ovillagrana_assignment.txt 
+
+
 # Databases
 
 ### list all databases that exist on server:
@@ -76,22 +86,44 @@ RENAME TABLE old_table1 TO new_table1,
              old_table2 TO new_table2,
              old_table3 TO new_table3;
 
+### copy table with indexes and triggers:
+CREATE TABLE [newtable] LIKE [oldtable]; 
+INSERT INTO [newtable] SELECT * FROM [oldtable];
+
+### copy just table structure and data:
+CREATE TABLE [tbl_new] AS SELECT * FROM [tbl_old];
+
+### does dot notation work to use different database?
+CREATE TABLE [recipes_new] LIKE production.recipes;
+INSERT [recipes_new] SELECT * FROM production.recipes;
+
 # UPDATE and DELETE statements
 
-### Updating records: 
+### Updating all rows of records: 
+UPDATE [table] SET [column] = '[updated-value]';
+
+### Updating some record(s) with conditional:
 UPDATE [table] SET [column] = '[updated-value]' WHERE [column] = [value];
 
-### Deleting records: 
+### Deleting a specific record: 
 DELETE FROM [table] WHERE [column] = [value];
 
 ### Delete all records from a table (without dropping the table itself): 
-DELETE FROM [table]; (This also resets the incrementing counter for auto generated columns like an id column.)
+- (This also resets the incrementing counter for auto generated columns like an id column.)
+DELETE FROM [table]; 
 
 ### Delete all records in a table: 
 truncate table [table];
 
 ### Removing table columns: 
 ALTER TABLE [table] DROP COLUMN [column];
+
+### Rename column:
+[table].Columns["[column_name]"].ColumnName = [new_column_name];
+
+### Rename column:
+alter table Table_name rename column oldName to newName;
+Update Table_name set oldName= newName;
 
 ### Deleting tables: 
 DROP TABLE [table];
@@ -100,16 +132,6 @@ DROP TABLE [table];
 DROP DATABASE [database];
 
 # additional functions
-
-### start a log of workflow
-tee ovillagrana_assignment3.txt
-
-### stop logging workflow
-notee
-
-### bash command to zip files
-$ zip ovillagrana_assignment.zip ovillagrana_assignment.sql ovillagrana_assignment.txt 
-
 
 ### Custom column output names: 
 SELECT [column] AS [custom-column] FROM [table];
@@ -162,3 +184,13 @@ SELECT * FROM [table1] LEFT OUTER JOIN [table2] ON [table1].[column] = [table2].
 ### Rename column or table using an alias: 
 SELECT [table1].[column] AS '[value]', [table2].[column] AS '[value]' FROM [table1], [table2];
 Users functions
+
+### show tables and data types
+SELECT COLUMN_NAME, DATA_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE TABLE_SCHEMA = [db_name]
+AND TABLE_NAME = [table_name];
+
+### show tables and data types
+SELECT DATA_TYPE FROM INFORMATION_SCHEMA.COLUMNS 
+WHERE table_name = [tbl_name] AND COLUMN_NAME = [col_name];
